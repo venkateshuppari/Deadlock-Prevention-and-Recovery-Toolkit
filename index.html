@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadlock Prevention and Recovery Toolkit</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <h1>Deadlock Prevention and Recovery Toolkit</h1>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('detection')">Deadlock Detection</div>
+        <div class="tab" onclick="switchTab('prevention')">Prevention</div>
+        <div class="tab" onclick="switchTab('recovery')">Recovery</div>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <h2>System State</h2>
+            <div class="tab-content active" id="detection-tab">
+                <label for="allocationInput">Allocation Matrix (one process per line):</label>
+                <textarea id="allocationInput" placeholder="Example: 
+0,1,0
+2,0,0
+3,0,2
+2,1,1
+0,0,2"></textarea>
+                <p class="help-text">Enter the resources currently allocated to each process (comma-separated values)</p>
+                <label for="maxInput">Max Demand Matrix:</label>
+                <textarea id="maxInput" placeholder="Example: 
+7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3"></textarea>
+                <p class="help-text">Enter the maximum demand of each process (same format as allocation)</p>
+                <label for="availableInput">Available Resources:</label>
+                <textarea id="availableInput" placeholder="Example: 3,3,2"></textarea>
+                <p class="help-text">Enter currently available resources (comma-separated)</p>
+                <div class="button-group">
+                    <button onclick="runBankersAlgorithm()" class="success">Check Safety</button>
+                    <button onclick="detectDeadlock()" class="danger">Detect Deadlock</button>
+                    <button onclick="clearInputs()" class="secondary">Clear</button>
+                </div>
+            </div>
+            <div class="tab-content" id="prevention-tab">
+                <h3>Deadlock Prevention Strategies</h3>
+                <p>Select prevention method to apply:</p>
+                <div class="button-group">
+                    <button onclick="applyPrevention('mutual-exclusion')">Mutual Exclusion</button>
+                    <button onclick="applyPrevention('hold-wait')">Hold and Wait</button>
+                    <button onclick="applyPrevention('no-preemption')">No Preemption</button>
+                    <button onclick="applyPrevention('circular-wait')">Circular Wait</button>
+                </div>
+                <div id="preventionOutput" class="process-info">
+                    Select a prevention method to see how it would modify the current system state.
+                </div>
+            </div>
+            <div class="tab-content" id="recovery-tab">
+                <h3>Deadlock Recovery Options</h3>
+                <p>Select recovery method to apply:</p>
+                <div class="button-group">
+                    <button onclick="applyRecovery('process-termination')">Process Termination</button>
+                    <button onclick="applyRecovery('resource-preemption')">Resource Preemption</button>
+                </div>
+                <div id="recoveryOutput" class="process-info">
+                    Select a recovery method to see how it would resolve a detected deadlock.
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <h2>Results</h2>
+            <div id="output">
+                <p>Run an analysis to see results here.</p>
+            </div>
+            <div id="processDetails" class="resource-grid"></div>
+            <div id="safeSequenceContainer"></div>
+        </div>
+    </div>
+    <script src="script3.js"></script>
+</body>
+</html>
